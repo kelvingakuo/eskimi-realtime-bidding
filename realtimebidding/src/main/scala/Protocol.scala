@@ -1,4 +1,7 @@
 package com.rtbkg;
+
+import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._;
+import spray.json.DefaultJsonProtocol._;
 // Define all the relevant elements i.e. bid, campaign, bid response etc.
 
 // Campaign protocol
@@ -58,15 +61,32 @@ case class BidRequest (
     imp: Option[List[Impression]],
     site: Site,
     user: Option[User],
-    device: Option[Device]
-);
+    device: Option[Device],
+) {
+    def country: String = {
+        val userC = user.get.geo.get.country.get;
+        val devC = device.get.geo.get.country.get;
+        
+        if(devC.isEmpty) userC else devC;
+    }
+}
 
-case class MatchingCampaign (
+// JSON marshalling
+object jsonFormats {
+    implicit val geoFormat = jsonFormat1(Geo);
+    implicit val deviceFormat = jsonFormat2(Device);
+    implicit val userFormat = jsonFormat2(User);
+    implicit val siteFormat = jsonFormat2(Site);
+    implicit val impressionFormat = jsonFormat8(Impression);
+
+    implicit val bannerFormat = jsonFormat4(Banner);
+}
+
+// The matching campaign returned by actor
+case class BidResponse (
     id: String,
     bidRequestId: Option[String],
     price: Option[Double],
     adId: Option[String],
     banner: Option[Banner]
-
-
 )

@@ -28,7 +28,7 @@ object campaigns {
             id = 2,
             country = "LT",
             targeting = Targeting(
-                targetSiteIds = Seq("cc", "dd", "ee")
+                targetSiteIds = Seq("0006a522ce0f4bbbbaa6b3c38cafaa0f", "dd", "ee")
             ),
             banners = List(
                 Banner (
