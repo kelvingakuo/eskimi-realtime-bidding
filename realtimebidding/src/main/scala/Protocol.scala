@@ -6,7 +6,7 @@ import spray.json.DefaultJsonProtocol._;
 
 // Campaign protocol
 case class Targeting (
-    targetSiteIds: Seq[String]
+    targetedSiteIds: Seq[String]
     // TODO: Add other matching criteria
 );
 
@@ -64,14 +64,14 @@ case class BidRequest (
     device: Option[Device],
 ) {
     def country: String = {
-        val userC = user.get.geo.get.country.get;
+        val userC = user.get.geo.get.country.get; // 'get' because optional
         val devC = device.get.geo.get.country.get;
         
         if(devC.isEmpty) userC else devC;
     }
 }
 
-// JSON marshalling
+// JSON (un)marshalling
 object jsonFormats {
     implicit val geoFormat = jsonFormat1(Geo);
     implicit val deviceFormat = jsonFormat2(Device);

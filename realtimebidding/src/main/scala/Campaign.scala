@@ -7,39 +7,37 @@ import com.rtbkg.{Campaign, Targeting, Banner};
 // A list of active campaigns
 object campaigns {
     val activeCampaigns = Seq(
-        Campaign (
+        Campaign(
             id = 1,
             country = "LT",
             targeting = Targeting(
-                targetSiteIds = Seq("aa", "bb", "cc")
+                targetedSiteIds = Seq("0006a522ce0f4bbbbaa6b3c38cafaa0f") // Use collection of your choice
             ),
             banners = List(
-                Banner (
-                    id = 1,
-                    src = "https://business.eskimi.com/wp-content/uploads/2020/06/openGraph.jpeg",
-                    width = 300,
-                    height = 250
-                
+                Banner(
+                id = 1,
+                src = "https://business.eskimi.com/wp-content/uploads/2020/06/openGraph.jpeg",
+                width = 300,
+                height = 250
                 )
             ),
-            bid = 5
+            bid = 5d
         ),
-        Campaign (
+        Campaign(
             id = 2,
             country = "LT",
             targeting = Targeting(
-                targetSiteIds = Seq("0006a522ce0f4bbbbaa6b3c38cafaa0f", "dd", "ee")
+                targetedSiteIds = Seq("0006a522ce0f4bbbbaa6b3c38cafaa0f") // Use collection of your choice
             ),
             banners = List(
-                Banner (
-                    id = 1,
+                Banner(
+                    id = 22,
                     src = "https://business.eskimi.com/wp-content/uploads/2020/06/openGraph.jpeg",
-                    width = 300,
-                    height = 250
-                
+                    width = 50,
+                    height = 100
                 )
             ),
-            bid = 5
+            bid = 6d
         )
     );
 }
