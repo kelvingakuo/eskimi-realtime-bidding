@@ -30,12 +30,13 @@ object BiddingActor {
             );
         }
 
+        case class RightBanner(banner: Banner, id: Int, price: Option[Double]);
         def getRightSizeBanners(campaign: Campaign, impressions: Seq[Impression]) = {
             for{
                 impression <- impressions
                 banner <- campaign.banners
                 if (banner.width == impression.w.get && banner.height == impression.h.get) || ((impression.wmin.get <= banner.width && impression.wmax.get >= banner.width) && (impression.hmin.get <= banner.height && impression.hmax.get >= banner.height))
-             } yield List(banner, campaign.id, impression.bidFloor);
+             } yield RightBanner(banner, campaign.id, impression.bidFloor); //No other data type was working
         }
     
         def filterCampaigns(req: BidRequest): Option[BidResponse] = {
@@ -60,27 +61,15 @@ object BiddingActor {
                 val oneCampaign = allMatchingCampaigns(
                     random.nextInt(allMatchingCampaigns.length)
                 );
-                // println("======================");
-                // println(oneCampaign(0));
-                // println(oneCampaign(0).getClass);
-                // println(oneCampaign(1));
-                // println(oneCampaign(1).getClass);
-                // println(oneCampaign(2));
-                // println(oneCampaign(2).getClass);
-                // println("======================");
+
                 Some(
                     BidResponse(
                         id = UUID.randomUUID().toString,
                         bidRequestId = Some(req.id),
-                        price = oneCampaign(2).toString.toDoubleOption,
-                        adId = Some(oneCampaign(1).toString),
+                        price = oneCampaign.price,
+                        adId = Some(oneCampaign.id.toString),
                         banner = Some(
-                            Banner(
-                                id = 22,
-                                src = "https://business.eskimi.com/wp-content/uploads/2020/06/openGraph.jpeg",
-                                width = 50,
-                                height = 100
-                            )
+                            oneCampaign.banner
                         )
                     )
                 );
