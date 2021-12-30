@@ -24,9 +24,6 @@ $ cd realtimebidding
 Starts a server on ```localhost:8080```
 
 ## Testing
-### Unit tests
-```sbt test```
-
 ### HTTP
 
 Modify the file ```realtimebidding/src/main/scala/Campaign.scala``` to have different campaign configurations.
